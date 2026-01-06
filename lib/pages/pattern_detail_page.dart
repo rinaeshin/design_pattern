@@ -32,20 +32,7 @@ class PatternDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(pattern.name),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.open_in_new),
-            tooltip: 'DartPad 열기',
-            onPressed: pattern.dartpadUrl == null
-                ? null
-                : () {
-                    // Web에서 새 탭으로 DartPad 열기 가능
-                  },
-          ),
-        ],
-      ),
+      appBar: AppBar(title: Text(pattern.name)),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: _buildDemoArea(context),
@@ -54,18 +41,19 @@ class PatternDetailPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              ElevatedButton.icon(
-                onPressed: () => _showCodeDialog(context),
-                icon: const Icon(Icons.code),
-                label: const Text('Code'),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () => _showCodeDialog(context),
+                  child: const Text('Code'),
+                ),
               ),
               const SizedBox(width: 8),
-              ElevatedButton.icon(
-                onPressed: () => _showOverviewDialog(context),
-                icon: const Icon(Icons.info_outline),
-                label: const Text('Overview'),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () => _showOverviewDialog(context),
+                  child: const Text('Overview'),
+                ),
               ),
             ],
           ),
