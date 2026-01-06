@@ -1,0 +1,1 @@
+ /Users/rinaeshin/IdeaProjects/android_project/design_pattern/.dart_tool/flutter_build/b9897808f9190daf9b31acc21ba9876b/dart_build_result.json: 
