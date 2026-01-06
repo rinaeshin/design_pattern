@@ -1,0 +1,4 @@
+enum ViewMode {
+  developer,
+  nonDeveloper,
+}
