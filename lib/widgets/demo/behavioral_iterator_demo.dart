@@ -13,7 +13,9 @@ class _BehavioralIteratorDemoState extends State<BehavioralIteratorDemo> {
     final list = MyList<int>([1, 2, 3]);
     final it = list.iterator();
     final items = <int>[];
-    while (it.moveNext()) items.add(it.current);
+    while (it.moveNext()) {
+      items.add(it.current);
+    }
     setState(() => result = items.join(', '));
   }
 
