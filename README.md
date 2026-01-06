@@ -50,6 +50,10 @@ QR 코드
 
   ![QR](/assets/qr_deeplink.svg)
 
+  다운로드:
+  - SVG: `assets/qr_deeplink.svg`
+  - PNG: `assets/qr_deeplink.png`
+
 다음 권장 작업
 - `README.md`(이 파일) 검토 및 필요시 보강
 - 워크플로에 PAT fallback 추가 또는 리포지토리 설정에서 Actions 권한 변경
