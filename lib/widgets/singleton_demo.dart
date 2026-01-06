@@ -25,7 +25,7 @@ class SingletonDemoPage extends StatelessWidget {
             const SizedBox(height: 12),
             ValueListenableBuilder<int>(
               valueListenable: counter.count,
-              builder: (_, value, __) => Text(
+              builder: (context, value, child) => Text(
                 '$value',
                 style: const TextStyle(
                   fontSize: 36,
