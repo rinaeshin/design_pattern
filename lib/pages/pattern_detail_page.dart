@@ -31,102 +31,44 @@ class PatternDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(pattern.name),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.open_in_new),
-              tooltip: 'DartPad 열기',
-              onPressed: pattern.dartpadUrl == null
-                  ? null
-                  : () {
-                      // Web에서 새 탭으로 DartPad 열기 가능
-                    },
-            ),
-          ],
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: 'Demo'),
-              Tab(text: 'Code'),
-              Tab(text: 'Overview'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(pattern.name),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.open_in_new),
+            tooltip: 'DartPad 열기',
+            onPressed: pattern.dartpadUrl == null
+                ? null
+                : () {
+                    // Web에서 새 탭으로 DartPad 열기 가능
+                  },
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: _buildDemoArea(context),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () => _showCodeDialog(context),
+                icon: const Icon(Icons.code),
+                label: const Text('Code'),
+              ),
+              const SizedBox(width: 8),
+              ElevatedButton.icon(
+                onPressed: () => _showOverviewDialog(context),
+                icon: const Icon(Icons.info_outline),
+                label: const Text('Overview'),
+              ),
             ],
           ),
-        ),
-        body: TabBarView(
-          children: [
-            // Demo tab
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: _buildDemoArea(context),
-            ),
-
-            // Code tab
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: SelectableText(
-                        pattern.exampleCode,
-                        style: const TextStyle(
-                          fontFamily: 'monospace',
-                          fontSize: 13,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          Clipboard.setData(
-                            ClipboardData(text: pattern.exampleCode),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('코드가 클립보드에 복사되었습니다')),
-                          );
-                        },
-                        icon: const Icon(Icons.copy),
-                        label: const Text('Copy'),
-                      ),
-                      const SizedBox(width: 8),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          // Optional: open DartPad if url exists
-                        },
-                        icon: const Icon(Icons.open_in_new),
-                        label: const Text('Open'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-            // Overview tab
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('의도', style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: 8),
-                    Text(pattern.intent),
-                    const SizedBox(height: 16),
-                    Text('요약', style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: 8),
-                    Text(pattern.summary),
-                  ],
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );
@@ -209,5 +151,119 @@ class PatternDetailPage extends StatelessWidget {
     }
 
     return const Center(child: Text('데모가 준비되지 않았습니다.'));
+  }
+
+  void _showCodeDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return Dialog(
+          insetPadding: const EdgeInsets.all(24.0),
+          child: SizedBox(
+            width: 800,
+            height: 600,
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: SelectableText(
+                            pattern.exampleCode,
+                            style: const TextStyle(
+                              fontFamily: 'monospace',
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      const SizedBox(height: 40),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  top: 8,
+                  left: 8,
+                  child: IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.of(ctx).pop(),
+                  ),
+                ),
+                Positioned(
+                  right: 16,
+                  bottom: 16,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      Clipboard.setData(
+                        ClipboardData(text: pattern.exampleCode),
+                      );
+                      Navigator.of(ctx).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('코드가 클립보드에 복사되었습니다')),
+                      );
+                    },
+                    icon: const Icon(Icons.copy),
+                    label: const Text('Copy'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showOverviewDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return Dialog(
+          insetPadding: const EdgeInsets.all(24.0),
+          child: SizedBox(
+            width: 700,
+            height: 400,
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 40, 16, 16),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '의도',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(pattern.intent),
+                        const SizedBox(height: 16),
+                        Text(
+                          '요약',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(pattern.summary),
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 8,
+                  left: 8,
+                  child: IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.of(ctx).pop(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }
