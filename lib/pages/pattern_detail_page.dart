@@ -142,116 +142,128 @@ class PatternDetailPage extends StatelessWidget {
   }
 
   void _showCodeDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (ctx) {
-        return Dialog(
-          insetPadding: const EdgeInsets.all(24.0),
-          child: SizedBox(
-            width: 800,
-            height: 600,
-            child: Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: SelectableText(
-                            pattern.exampleCode,
-                            style: const TextStyle(
-                              fontFamily: 'monospace',
-                              fontSize: 13,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      const SizedBox(height: 40),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  top: 8,
-                  left: 8,
-                  child: IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.of(ctx).pop(),
-                  ),
-                ),
-                Positioned(
-                  right: 16,
-                  bottom: 16,
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      Clipboard.setData(
-                        ClipboardData(text: pattern.exampleCode),
-                      );
-                      Navigator.of(ctx).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('코드가 클립보드에 복사되었습니다')),
-                      );
-                    },
-                    icon: const Icon(Icons.copy),
-                    label: const Text('Copy'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
+    final isMobile = MediaQuery.of(context).size.width < 600;
 
-  void _showOverviewDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (ctx) {
-        return Dialog(
-          insetPadding: const EdgeInsets.all(24.0),
-          child: SizedBox(
-            width: 700,
-            height: 400,
-            child: Stack(
+    Widget content(BuildContext ctx) => SizedBox(
+      width: isMobile ? double.infinity : 800,
+      height: isMobile ? MediaQuery.of(context).size.height * 0.8 : 600,
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 40, 16, 16),
+                Expanded(
                   child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '의도',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(pattern.intent),
-                        const SizedBox(height: 16),
-                        Text(
-                          '요약',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(pattern.summary),
-                      ],
+                    child: SelectableText(
+                      pattern.exampleCode,
+                      style: const TextStyle(
+                        fontFamily: 'monospace',
+                        fontSize: 13,
+                      ),
                     ),
                   ),
                 ),
-                Positioned(
-                  top: 8,
-                  left: 8,
-                  child: IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.of(ctx).pop(),
-                  ),
-                ),
+                const SizedBox(height: 8),
+                const SizedBox(height: 40),
               ],
             ),
           ),
-        );
-      },
+          Positioned(
+            top: 8,
+            left: 8,
+            child: IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () => Navigator.of(ctx).pop(),
+            ),
+          ),
+          Positioned(
+            right: 16,
+            bottom: 16,
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: pattern.exampleCode));
+                Navigator.of(ctx).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('코드가 클립보드에 복사되었습니다')),
+                );
+              },
+              icon: const Icon(Icons.copy),
+              label: const Text('Copy'),
+            ),
+          ),
+        ],
+      ),
     );
+
+    if (isMobile) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (ctx) => SafeArea(child: content(ctx)),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (ctx) => Dialog(
+          insetPadding: const EdgeInsets.all(24.0),
+          child: content(ctx),
+        ),
+      );
+    }
+  }
+
+  void _showOverviewDialog(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 600;
+
+    Widget content(BuildContext ctx) => SizedBox(
+      width: isMobile ? double.infinity : 700,
+      height: isMobile ? MediaQuery.of(context).size.height * 0.6 : 400,
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 40, 16, 16),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('의도', style: Theme.of(context).textTheme.titleMedium),
+                  const SizedBox(height: 8),
+                  Text(pattern.intent),
+                  const SizedBox(height: 16),
+                  Text('요약', style: Theme.of(context).textTheme.titleMedium),
+                  const SizedBox(height: 8),
+                  Text(pattern.summary),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: 8,
+            left: 8,
+            child: IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () => Navigator.of(ctx).pop(),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (isMobile) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (ctx) => SafeArea(child: content(ctx)),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (ctx) => Dialog(
+          insetPadding: const EdgeInsets.all(24.0),
+          child: content(ctx),
+        ),
+      );
+    }
   }
 }
