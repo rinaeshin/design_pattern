@@ -11,7 +11,7 @@ Design Patterns - Flutter Demo
 - 배포 사이트(예시): `https://rinaeshin.github.io/design_pattern/` (gh-pages를 통해 호스팅)
 
 주요 변경 사항 (최근)
-- UI: 패턴 상세화면에서 `Code` / `Overview`를 AppBar 탭에서 하단 버튼으로 이동시키고, 모달(다이얼로그)로 표시하도록 변경.
+- UI: 패턴 상세화면에서 `Code` / `Overview`를 하단의 1:1 버튼으로 이동시키고, 데스크톱에서는 중앙 다이얼로그, 모바일에서는 바텀시트로 표시하도록 변경 (Demo는 기본 표시).
 - Composite 데모: `print` 대신 문자열 반환으로 변경하여 UI에서 결과를 표시하도록 수정.
 - 테스트: 기본 counter 테스트를 간단한 스모크 테스트로 교체.
 - CI: `.github/workflows/deploy_github_pages.yml`에 웹 빌드 후 gh-pages 배포 워크플로 추가(권한 문제로 수동 배포함).
