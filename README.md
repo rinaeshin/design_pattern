@@ -1,16 +1,11 @@
-# design_pattern
+• 프로젝트 개요
+	• 디자인 패턴 수(생성 5 / 구조 7 / 행위 11)
+	• 시연 URL https://rinaeshin.github.io/design_pattern/
+	• 실행 방법(Flutter web build 명령)
+	• GitHub Pages 배포 방식 요약
 
-A new Flutter project.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
