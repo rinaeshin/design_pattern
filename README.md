@@ -44,6 +44,12 @@ CI(자동 배포) 관련 주의사항
 - 워크플로에서 `GITHUB_TOKEN`(기본 토큰)을 사용해 gh-pages에 푸시하려면 리포지토리의 Actions 권한을 "Read and write"로 설정해야 합니다.
 - 권한 변경이 불가능한 경우, 개인 액세스 토큰(PAT)을 생성해 리포지토리 시크릿(예: `GH_PAGES_PAT`)으로 추가한 뒤 워크플로에서 해당 시크릿을 사용하도록 설정하면 됩니다.
 
+QR 코드
+- 프로젝트 페이지: https://rinaeshin.github.io/design_pattern/
+- QR 코드(스캔하면 위 URL로 이동):
+
+  ![QR](/assets/qr_deeplink.svg)
+
 다음 권장 작업
 - `README.md`(이 파일) 검토 및 필요시 보강
 - 워크플로에 PAT fallback 추가 또는 리포지토리 설정에서 Actions 권한 변경
