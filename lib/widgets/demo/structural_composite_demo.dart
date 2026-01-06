@@ -17,11 +17,9 @@ class _StructuralCompositeDemoState extends State<StructuralCompositeDemo> {
     sub.add(Leaf('B1'));
     sub.add(Leaf('B2'));
     root.add(sub);
-    // capture output by redirecting print? we'll just call operation and set a simple message
-    root.operation();
-    setState(
-      () => result = 'Called operation on composite (check console output)',
-    );
+    // capture output by calling operation and display it
+    final output = root.operation();
+    setState(() => result = 'Output: $output');
   }
 
   @override
