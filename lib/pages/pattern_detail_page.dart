@@ -134,34 +134,79 @@ class PatternDetailPage extends StatelessWidget {
 
   Widget _buildDemoArea(BuildContext context) {
     // Creational demos
-    if (pattern.id == 'singleton') return const CreationalSingletonDemo();
-    if (pattern.id == 'factory') return const CreationalFactoryDemo();
-    if (pattern.id == 'abstract_factory')
+    if (pattern.id == 'singleton') {
+      return const CreationalSingletonDemo();
+    }
+    if (pattern.id == 'factory') {
+      return const CreationalFactoryDemo();
+    }
+    if (pattern.id == 'abstract_factory') {
       return const CreationalAbstractFactoryDemo();
-    if (pattern.id == 'builder') return const CreationalBuilderDemo();
-    if (pattern.id == 'prototype') return const CreationalPrototypeDemo();
+    }
+    if (pattern.id == 'builder') {
+      return const CreationalBuilderDemo();
+    }
+    if (pattern.id == 'prototype') {
+      return const CreationalPrototypeDemo();
+    }
 
     // Structural demos
-    if (pattern.id == 'adapter') return const StructuralAdapterDemo();
-    if (pattern.id == 'bridge') return const StructuralBridgeDemo();
-    if (pattern.id == 'composite') return const StructuralCompositeDemo();
-    if (pattern.id == 'decorator') return const StructuralDecoratorDemo();
-    if (pattern.id == 'facade') return const StructuralFacadeDemo();
-    if (pattern.id == 'flyweight') return const StructuralFlyweightDemo();
-    if (pattern.id == 'proxy') return const StructuralProxyDemo();
+    if (pattern.id == 'adapter') {
+      return const StructuralAdapterDemo();
+    }
+    if (pattern.id == 'bridge') {
+      return const StructuralBridgeDemo();
+    }
+    if (pattern.id == 'composite') {
+      return const StructuralCompositeDemo();
+    }
+    if (pattern.id == 'decorator') {
+      return const StructuralDecoratorDemo();
+    }
+    if (pattern.id == 'facade') {
+      return const StructuralFacadeDemo();
+    }
+    if (pattern.id == 'flyweight') {
+      return const StructuralFlyweightDemo();
+    }
+    if (pattern.id == 'proxy') {
+      return const StructuralProxyDemo();
+    }
 
     // Behavioral demos
-    if (pattern.id == 'command') return const BehavioralCommandDemo();
-    if (pattern.id == 'observer') return const BehavioralObserverDemo();
-    if (pattern.id == 'strategy') return const BehavioralStrategyDemo();
-    if (pattern.id == 'state') return const BehavioralStateDemo();
-    if (pattern.id == 'template') return const BehavioralTemplateDemo();
-    if (pattern.id == 'iterator') return const BehavioralIteratorDemo();
-    if (pattern.id == 'mediator') return const BehavioralMediatorDemo();
-    if (pattern.id == 'memento') return const BehavioralMementoDemo();
-    if (pattern.id == 'chain') return const BehavioralChainDemo();
-    if (pattern.id == 'visitor') return const BehavioralVisitorDemo();
-    if (pattern.id == 'interpreter') return const BehavioralInterpreterDemo();
+    if (pattern.id == 'command') {
+      return const BehavioralCommandDemo();
+    }
+    if (pattern.id == 'observer') {
+      return const BehavioralObserverDemo();
+    }
+    if (pattern.id == 'strategy') {
+      return const BehavioralStrategyDemo();
+    }
+    if (pattern.id == 'state') {
+      return const BehavioralStateDemo();
+    }
+    if (pattern.id == 'template') {
+      return const BehavioralTemplateDemo();
+    }
+    if (pattern.id == 'iterator') {
+      return const BehavioralIteratorDemo();
+    }
+    if (pattern.id == 'mediator') {
+      return const BehavioralMediatorDemo();
+    }
+    if (pattern.id == 'memento') {
+      return const BehavioralMementoDemo();
+    }
+    if (pattern.id == 'chain') {
+      return const BehavioralChainDemo();
+    }
+    if (pattern.id == 'visitor') {
+      return const BehavioralVisitorDemo();
+    }
+    if (pattern.id == 'interpreter') {
+      return const BehavioralInterpreterDemo();
+    }
 
     return const Center(child: Text('데모가 준비되지 않았습니다.'));
   }
