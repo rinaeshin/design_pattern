@@ -1,6 +1,3 @@
-실행 방법(Flutter web build 명령)
-
-GitHub Pages 배포 방식 요약
 # GoF Design Patterns – Interactive Visualization
 
 GoF(Gang of Four) 디자인 패턴 **23개**를  
