@@ -1,0 +1,142 @@
+name: Deploy Flutter Web to GitHub Pages (gh-pages)
+
+on:
+  push:
+    branches:
+      - release/design-pattern
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gh-pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Flutter Pub Get
+        run: flutter pub get
+
+      # 필요 시 테스트 활성화
+      # - name: Run Tests
+      #   run: flutter test
+
+      - name: Build Web (GitHub Pages base-href)
+        run: |
+          flutter --version
+          flutter build web --release --base-href "/design_pattern/"
+
+      # gh-pages 브랜치에 build/web 결과를 루트로 배포
+      - name: Deploy to gh-pages
+        id: deploy
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          # PAT가 설정되어 있으면 사용, 없으면 GITHUB_TOKEN 사용
+          github_token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: build/web
+          force_orphan: true
+          commit_message: "deploy: Flutter web (release/design-pattern) -> gh-pages"
+
+      # main 브랜치 README 자동 업데이트
+      - name: Update main branch README
+        env:
+          DEPLOY_TIME: ${{ github.event.head_commit.timestamp }}
+          COMMIT_SHA: ${{ github.sha }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # main 브랜치 체크아웃
+          git fetch origin main
+          git checkout main
+
+          # README 업데이트 (Last Deploy 섹션 추가/업데이트)
+          DEPLOY_DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          DEPLOY_URL="https://rinaeshin.github.io/design_pattern/"
+          SHORT_SHA=$(echo $COMMIT_SHA | cut -c1-7)
+
+          # README에 Last Deploy 섹션이 없으면 추가, 있으면 업데이트
+          if ! grep -q "## 🚀 Last Deploy" README.md; then
+            # 섹션 추가
+            cat >> README.md << EOF
+
+## 🚀 Last Deploy
+- **Date**: ${DEPLOY_DATE}
+- **Commit**: [\`${SHORT_SHA}\`](https://github.com/${{ github.repository }}/commit/${COMMIT_SHA})
+- **Message**: ${COMMIT_MSG}
+- **URL**: [${DEPLOY_URL}](${DEPLOY_URL})
+EOF
+          else
+            # 기존 섹션 업데이트
+            sed -i '/## 🚀 Last Deploy/,/^$/c\
+## 🚀 Last Deploy\
+- **Date**: '"${DEPLOY_DATE}"'\
+- **Commit**: ['"${SHORT_SHA}"'](https://github.com/'"${{ github.repository }}"'/commit/'"${COMMIT_SHA}"')\
+- **Message**: '"${COMMIT_MSG}"'\
+- **URL**: ['"${DEPLOY_URL}"']('"${DEPLOY_URL}"')' README.md
+          fi
+
+          # 변경 사항이 있으면 커밋
+          if ! git diff --quiet README.md; then
+            git add README.md
+            git commit -m "docs: update deploy info in README [skip ci]"
+            git push origin main
+          fi
+
+      # 배포 성공 알림 (GitHub Actions Summary)
+      - name: Deploy Success Notification
+        if: success()
+        run: |
+          DEPLOY_URL="https://rinaeshin.github.io/design_pattern/"
+          SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          # ✅ Deploy Success!
+
+          ## 📦 Deployment Information
+          - **Branch**: \`release/design-pattern\`
+          - **Commit**: [\`${SHORT_SHA}\`](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
+          - **Message**: ${{ github.event.head_commit.message }}
+          - **Deploy Time**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+
+          ## 🌐 Live URL
+          🔗 [${DEPLOY_URL}](${DEPLOY_URL})
+
+          ## 📱 QR Code
+          ![QR Code](https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${DEPLOY_URL})
+
+          ---
+          *Automatically deployed to GitHub Pages (gh-pages branch)*
+          EOF
+
+      # 배포 실패 알림
+      - name: Deploy Failure Notification
+        if: failure()
+        run: |
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          # ❌ Deploy Failed
+
+          ## Error Information
+          - **Branch**: \`release/design-pattern\`
+          - **Commit**: [\`${{ github.sha }}\`](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
+          - **Message**: ${{ github.event.head_commit.message }}
+
+          Please check the workflow logs for details.
+          EOF
