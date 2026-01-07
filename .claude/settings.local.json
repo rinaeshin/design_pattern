@@ -5,7 +5,13 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(git remote:*)"
+      "Bash(git remote:*)",
+      "Bash(flutter doctor:*)",
+      "Bash(flutter clean:*)",
+      "Bash(flutter pub get:*)",
+      "Bash(cat:*)",
+      "Bash(flutter analyze:*)",
+      "Bash(flutter build:*)"
     ]
   }
 }

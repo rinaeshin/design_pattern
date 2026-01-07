@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../data/patterns.dart';
 import '../data/animation_scenarios.dart';
 import '../models/design_pattern.dart';
 import '../widgets/animation/pattern_animation_widget.dart';
