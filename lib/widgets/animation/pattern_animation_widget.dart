@@ -66,21 +66,7 @@ class _PatternAnimationWidgetState extends State<PatternAnimationWidget> {
 
     return Column(
       children: [
-        // Header with close button
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () =>
-                    Navigator.of(context).pop(), // Add close functionality
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16), // Added spacing
+        const SizedBox(height: 16),
         // Stage indicator
         Text(
           'Stage ${stage.step} / ${widget.stages.length}',
