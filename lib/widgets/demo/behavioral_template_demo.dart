@@ -9,15 +9,18 @@ class BehavioralTemplateDemo extends StatefulWidget {
 
 class _BehavioralTemplateDemoState extends State<BehavioralTemplateDemo> {
   String result = '';
+
+  /// Execute the football game
   void _football() {
     final g = Football();
-    g.play();
+    g.play(); // Play using the Football template
     setState(() => result = 'Played Football (see console)');
   }
 
+  /// Execute the cricket game
   void _cricket() {
     final g = Cricket();
-    g.play();
+    g.play(); // Play using the Cricket template
     setState(() => result = 'Played Cricket (see console)');
   }
 
@@ -33,12 +36,15 @@ class _BehavioralTemplateDemoState extends State<BehavioralTemplateDemo> {
         const SizedBox(height: 12),
         ElevatedButton(
           onPressed: _football,
-          child: const Text('Play Football'),
+          child: const Text('Play Football'), // Button to play football
         ),
         const SizedBox(height: 12),
-        ElevatedButton(onPressed: _cricket, child: const Text('Play Cricket')),
+        ElevatedButton(
+          onPressed: _cricket,
+          child: const Text('Play Cricket'),
+        ), // Button to play cricket
         const SizedBox(height: 12),
-        Text('Result: $result'),
+        Text('Result: $result'), // Display the last action result
       ],
     );
   }

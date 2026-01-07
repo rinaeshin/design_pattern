@@ -15,8 +15,7 @@ class PatternAnimationWidget extends StatefulWidget {
   });
 
   @override
-  State<PatternAnimationWidget> createState() =>
-      _PatternAnimationWidgetState();
+  State<PatternAnimationWidget> createState() => _PatternAnimationWidgetState();
 }
 
 class _PatternAnimationWidgetState extends State<PatternAnimationWidget> {
@@ -66,14 +65,28 @@ class _PatternAnimationWidgetState extends State<PatternAnimationWidget> {
     final stage = widget.stages[_currentStage];
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        // Header with close button
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () =>
+                    Navigator.of(context).pop(), // Add close functionality
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16), // Added spacing
         // Stage indicator
         Text(
           'Stage ${stage.step} / ${widget.stages.length}',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
 

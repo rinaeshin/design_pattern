@@ -11,16 +11,19 @@ class _BehavioralMementoDemoState extends State<BehavioralMementoDemo> {
   final Originator origin = Originator();
   Memento? saved;
 
+  /// Set the current state with a timestamp
   void _setState() {
     origin.setState('state@${DateTime.now().millisecondsSinceEpoch}');
     setState(() {});
   }
 
+  /// Save the current state
   void _save() {
     saved = origin.save();
     setState(() {});
   }
 
+  /// Restore to the previously saved state
   void _restore() {
     if (saved != null) {
       origin.restore(saved!);
@@ -35,19 +38,25 @@ class _BehavioralMementoDemoState extends State<BehavioralMementoDemo> {
       children: [
         Text('Memento Demo', style: Theme.of(context).textTheme.titleLarge),
         const SizedBox(height: 12),
-        Text('Current: ${origin.state}'),
+        Text('Current: ${origin.state}'), // Display current state
         const SizedBox(height: 12),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
               onPressed: _setState,
-              child: const Text('Change State'),
+              child: const Text('Change State'), // Button to change the state
             ),
             const SizedBox(width: 8),
-            ElevatedButton(onPressed: _save, child: const Text('Save')),
+            ElevatedButton(
+              onPressed: _save,
+              child: const Text('Save'),
+            ), // Save button
             const SizedBox(width: 8),
-            ElevatedButton(onPressed: _restore, child: const Text('Restore')),
+            ElevatedButton(
+              onPressed: _restore,
+              child: const Text('Restore'),
+            ), // Restore button
           ],
         ),
       ],
