@@ -1,7 +1,3 @@
-https://rinaeshin.github.io/design_pattern/
-
-[![QR Code](https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://rinaeshin.github.io/design_pattern/)](https://rinaeshin.github.io/design_pattern/)
-
 실행 방법(Flutter web build 명령)
 
 GitHub Pages 배포 방식 요약
