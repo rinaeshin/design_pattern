@@ -27,7 +27,9 @@ GoF(Gang of Four) 디자인 패턴 **23개**를
 ### 📱 QR Code
 아래 QR 코드를 통해 모바일에서도 바로 확인할 수 있습니다.
 
-![Design Pattern Demo QR](docs/qr.png)
+![Design Pattern Demo QR](docs/qr.png)](https://rinaeshin.github.io/design_pattern/
+
+[![QR Code](https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://rinaeshin.github.io/design_pattern/)](https://rinaeshin.github.io/design_pattern/))
 
 ---
 
