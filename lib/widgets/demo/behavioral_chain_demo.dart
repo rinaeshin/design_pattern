@@ -13,7 +13,7 @@ class _BehavioralChainDemoState extends State<BehavioralChainDemo> {
     final a = ConcreteHandlerA();
     final b = ConcreteHandlerA();
     a.next = b;
-    a.handle('B');
+    a.handle('B'); // Stage 2: Request passed along chain
     setState(() => result = 'Request passed along chain (see handlers)');
   }
 

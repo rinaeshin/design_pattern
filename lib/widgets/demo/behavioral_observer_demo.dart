@@ -15,10 +15,11 @@ class _BehavioralObserverDemoState extends State<BehavioralObserverDemo> {
   void initState() {
     super.initState();
     subj.add((v) {
-      setState(() => val = v);
+      setState(() => val = v); // Update the state on value change
     });
   }
 
+  /// Increment the subject's value
   void _inc() {
     subj.inc();
   }
@@ -32,7 +33,10 @@ class _BehavioralObserverDemoState extends State<BehavioralObserverDemo> {
         const SizedBox(height: 12),
         Text('Value: $val'),
         const SizedBox(height: 12),
-        ElevatedButton(onPressed: _inc, child: const Text('Increment')),
+        ElevatedButton(
+          onPressed: _inc,
+          child: const Text('Increment'),
+        ), // Trigger value increment
       ],
     );
   }

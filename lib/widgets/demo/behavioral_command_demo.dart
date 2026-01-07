@@ -11,12 +11,14 @@ class _BehavioralCommandDemoState extends State<BehavioralCommandDemo> {
   final Light light = Light();
   final Remote remote = Remote();
 
+  /// Execute the command to turn on the light
   void _on() {
     remote.slot = OnCommand(light);
     remote.press();
     setState(() {});
   }
 
+  /// Execute the command to turn off the light
   void _off() {
     remote.slot = OffCommand(light);
     remote.press();
@@ -34,9 +36,15 @@ class _BehavioralCommandDemoState extends State<BehavioralCommandDemo> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(onPressed: _on, child: const Text('Turn On')),
+            ElevatedButton(
+              onPressed: _on,
+              child: const Text('Turn On'),
+            ), // Trigger the OnCommand
             const SizedBox(width: 8),
-            ElevatedButton(onPressed: _off, child: const Text('Turn Off')),
+            ElevatedButton(
+              onPressed: _off,
+              child: const Text('Turn Off'),
+            ), // Trigger the OffCommand
           ],
         ),
       ],
